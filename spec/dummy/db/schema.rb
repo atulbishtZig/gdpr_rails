@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410171354) do
+ActiveRecord::Schema.define(version: 2018_04_10_171354) do
 
-  create_table "policy_manager_portability_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "policy_manager_portability_requests", force: :cascade do |t|
     t.integer "user_id"
     t.string "state"
     t.string "attachment"
@@ -26,7 +29,7 @@ ActiveRecord::Schema.define(version: 20180410171354) do
     t.index ["user_id"], name: "index_policy_manager_portability_requests_on_user_id"
   end
 
-  create_table "policy_manager_terms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "policy_manager_terms", force: :cascade do |t|
     t.text "description"
     t.string "rule"
     t.string "state"
@@ -36,7 +39,7 @@ ActiveRecord::Schema.define(version: 20180410171354) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "policy_manager_user_terms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "policy_manager_user_terms", force: :cascade do |t|
     t.integer "user_id"
     t.integer "term_id"
     t.string "state"
@@ -47,7 +50,7 @@ ActiveRecord::Schema.define(version: 20180410171354) do
     t.index ["user_id"], name: "index_policy_manager_user_terms_on_user_id"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

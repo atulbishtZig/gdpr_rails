@@ -9,6 +9,10 @@ module PolicyManager
     # GET /user_terms/1
     def show
       @user_term = current_user.present? ? current_user.handle_policy_for(@term) : UserTerm.new(term: @term, user: nil, state: cookies["policy_rule_#{@term.rule.name}"])
+      respond_to do |format|
+        format.html{ }
+        format.json{ render json: @user_term }
+      end
     end
 
     # GET /pending
