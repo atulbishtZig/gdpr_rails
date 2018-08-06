@@ -17,7 +17,6 @@ module PolicyManager
 
     def create
       respond_to do |format|
-       
           if current_user.can_request_portability?
             if current_user.portability_requests.create
               format.html{
@@ -35,8 +34,7 @@ module PolicyManager
               render json: {notice: I18n.t("terms_app.user_portability_requests.index.has_pending")}, status: 422  
             }
           end
-        
-      end
+        end
     end
 
     #def destroy

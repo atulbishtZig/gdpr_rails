@@ -21,18 +21,29 @@ module PolicyManager
     # POST /terms
     def create
       @term = Term.new(term_params)
-
+      respond_to do |format|
       if @term.save
-        redirect_to category_term_path(@term.rule.name, @term), notice: I18n.t("terms_app.terms.new.created")
+        format.html{
+          redirect_to category_term_path(@term.rule.name, @term), notice: I18n.t("terms_app.terms.new.created")
+        }
+        format.json{
+          render json: {notice: I18n.t("terms_app.terms.new.created")}
+        }
       else
-        render :new
+        format.html{
+          render :new
+        }
+      end
       end
     end
 
     # PATCH/PUT /terms/1
     def update
       if @term.update(term_params)
-        redirect_to category_term_path(@term.rule.name, @term), notice: I18n.t("terms_app.terms.new.updated")
+        respond_to do |format|
+          format.html{ redirect_to category_term_path(@term.rule.name, @term), notice: I18n.t("terms_app.terms.new.updated") }
+          format.json{ render json:{ notice: I18n.t("terms_app.terms.new.updated") } }
+      end
       else
         render :edit
       end
@@ -41,7 +52,10 @@ module PolicyManager
     # DELETE /terms/1
     def destroy
       @term.destroy
-      redirect_to category_terms_path(@term.rule.name), notice: I18n.t("terms_app.terms.new.destroyed")
+      respond_to do |format|
+        format.html{  redirect_to category_terms_path(@term.rule.name), notice: I18n.t("terms_app.terms.new.destroyed")}
+        format.json{ render json:{ notice: I18n.t("terms_app.terms.new.destroyed"} }
+      end
     end
 
     private
