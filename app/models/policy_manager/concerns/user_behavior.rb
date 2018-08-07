@@ -1,7 +1,13 @@
 # -*- encoding : utf-8 -*-
 module PolicyManager::Concerns::UserBehavior
   extend ActiveSupport::Concern
-
+  module ActiveRecordExtension
+    #Converts the model into messageable allowing it to interchange messages and
+    #receive notifications
+    def acts_as_messageable
+      #include Messageable
+    end
+  end
   included do
     has_many :user_terms, class_name: "PolicyManager::UserTerm", autosave: true
     has_many :terms, through: :user_terms, class_name: "PolicyManager::Term"
@@ -104,6 +110,11 @@ module PolicyManager::Concerns::UserBehavior
     return true if user_term.blank?
     return true if user_term.rejected?
     term.created_at > user_term.created_at
+  end
+
+
+  def acts_as_messageable
+
   end
 
   def policy_term_on(rule)
